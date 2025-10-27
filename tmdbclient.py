@@ -1,4 +1,3 @@
-# tmdbclient.py
 import requests
 from typing import Optional, List
 from models import Movie, Author
@@ -51,7 +50,7 @@ class TMDBClient:
 
             return Movie(
                 name=movie_data.get("title"),
-                movie_id=movie_id,
+                id=movie_id,
                 rating=movie_data.get("vote_average", 0.0),
                 author=director,
             )
@@ -60,7 +59,6 @@ class TMDBClient:
             return None
 
     def get_recommendations(self, movie_id: int) -> List[Movie]:
-        """Busca as recomendações do TMDB para um filme."""
         endpoint = f"{self.base_url}/movie/{movie_id}/recommendations"
         params = {"api_key": self.api_key, "language": "pt-BR"}
         recommendations = []
@@ -72,7 +70,7 @@ class TMDBClient:
                 recommendations.append(
                     Movie(
                         name=movie_data.get("title"),
-                        movie_id=movie_data.get("id"),
+                        id=movie_data.get("id"),
                         rating=movie_data.get("vote_average", 0.0),
                         author=None,
                     )
@@ -95,7 +93,7 @@ class TMDBClient:
                     filmography.append(
                         Movie(
                             name=movie_data.get("title"),
-                            movie_id=movie_data.get("id"),
+                            id=movie_data.get("id"),
                             rating=movie_data.get("vote_average", 0.0),
                             author=None,
                         )
